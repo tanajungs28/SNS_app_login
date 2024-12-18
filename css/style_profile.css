@@ -44,6 +44,7 @@
 
  main {
     padding-top: 10px;
+    padding-bottom: 30px;
     background-color: #f5f5f5;
     text-align:center;
 }
@@ -67,4 +68,63 @@
 #send_btn_area {
   text-align: center; /* 送信ボタンの中央揃え */
   margin-top: 20px; /* 上部に適度なスペースを追加 */
+}
+
+.profile_card_area {
+  /* display: flex;
+  flex-wrap: wrap; */
+  display: grid; /* Gridレイアウトを使用 */
+  grid-template-columns: 1fr 1fr; /* 2列にする */
+  gap: 1%; /* カード間の隙間 */
+  justify-content: center;
+  margin-top: 1%;
+}
+
+/* プロフィールカードの作成 */
+#prcard {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #FFCCCC;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex; /* 縦並びを可能に */
+  flex-direction: column; /* 子要素を縦方向に並べる */
+  align-items: center; /* 中央寄せ */
+  padding: 1%; /* 余白を追加 */
+  box-sizing: border-box; /* padding分を含めた高さに調整 */
+  position: relative;
+}
+#reg_date {
+  font-size: small;
+  color: #444444;
+  position: absolute;
+  left: 2%;
+}
+
+#group_name {
+  font-weight: 700;
+  font-size: large;
+  color: #ff0066;
+  padding-top: 5%;
+  padding-bottom: 2%;
+
+}
+
+#tubelink {
+  padding: 1%;
+}
+
+#thumbnail {
+  width: 60%;
+  height: 60%;
+  margin: 1% auto;
+}
+
+#comment_area {
+  width: 70%;
+  height: 20%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 1%;
+  margin: 1% auto;
 }

@@ -8,15 +8,26 @@ $url = $_POST['url'];
 $comment = $_POST['comment'];
 
 //2.  DB接続します
+
+$db_name = '';  //データベース名(ユーザ名)
+$db_host = '';  //DBホスト
+$db_id = '';  //ユーザ名
+$db_pw = '';  //パスワード
+
+
 try {
   //ID:'root', Password: xamppは 空白 '',SQLのポート番号の指定も必要
-  $pdo = new PDO('mysql:dbname=user_db_class;
-                  port=3307;
-                  charset=utf8;
-                  host=localhost','root','');
+  // $pdo = new PDO('mysql:dbname=user_db_class;
+  //                 port=3307;
+  //                 charset=utf8;
+  //                 host=localhost','root','');
+  $server_info = 'mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host;
+  $pdo = new PDO($server_info, $db_id, $db_pw);
 } catch (PDOException $e) {
   exit('DBConnectError:'.$e->getMessage());
 }
+
+
 
 //３．データ登録SQL作成
 
@@ -45,7 +56,7 @@ if($status === false){
     $error = $stmt->errorInfo();
     exit('ErrorMessage:'.$error[2]);
   }else{
-    //５．index.phpへリダイレクト
+    //５．profile_edit.phpへリダイレクト
     header('Location: profile_edit.php');
   
   }

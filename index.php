@@ -24,7 +24,7 @@
             <ul class="menu">
                 <li class="top"><a href="./user_reg.php">ユーザー登録</a></li>
                 <li><a href="./user_list.php">ユーザー一覧</a></li>
-                <li><a href="./profile_edit.php">プロフィール設定</a></li>
+                <li><a href="./profile_edit.php">推し曲登録</a></li>
                 <li><a href="">未実装</a></li>
             </ul>
     </header>
