@@ -22,3 +22,15 @@ $("#back_btn").on("click",function(){
     location.href = "./index.php";
 })
 
+// ミートボールの動き
+    document.addEventListener("DOMContentLoaded", () => {
+        const buttons = document.querySelectorAll(".meatball");
+        buttons.forEach(button => {
+            button.addEventListener("click", () => {
+                console.log("ミートボールボタンを押しました")
+                const menu = button.nextElementSibling; // ボタンの次の要素（menu-container）
+                menu.classList.toggle("active"); // 表示/非表示を切り替える
+            });
+        });
+    });
+// })

@@ -1,4 +1,41 @@
+<?php 
+        //データベース接続
+        require_once('funcs.php');
+        // $pdo = localdb_conn(); //ローカル環境
+        // $pdo = db_conn();         //本番環境
+        $db_name = '';       //データベース名(ユーザ名)
+        $db_host = '';   //DBホスト
+        $db_id = '';         //ユーザ名
+        $db_pw = '';                      //パスワード
+          
+        try {
+          // ID:'root', Password: xamppは 空白 '',SQLのポート番号の指定も必要
+          $server_info = 'mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host;
+          $pdo = new PDO($server_info, $db_id, $db_pw);
+        } catch (PDOException $e) {
+          exit('DBConnectError:'.$e->getMessage());
+        }
+        
+        //２．データ登録SQL作成
+        $stmt = $pdo->prepare('SELECT * FROM timeline_table');
+        $status = $stmt->execute();
+        
 
+        //３．データ表示
+        $view = '';
+        $tweets = [];
+        $ids = [];
+        if ($status === false) {
+            $error = $stmt->errorInfo();
+            exit('SQLError:' . print_r($error, true));
+        } else {
+            //1行ずつデータベースから結果を取り出して配列に格納($resultは連想配列)
+            while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                $tweets[] = $result['tweet'] ;
+                $ids[] = $result['id'] ;
+            }
+        }        
+?>
 
 
 <!DOCTYPE html>
@@ -14,13 +51,16 @@
 
 
 <body>
-    <!-- ヘッダーとハンバーガーメニュー -->
+    <!-- ヘッダー -->
     <header>
         <div class="title_area">
             <div class="title">SNS風味にしたいアプリ</div>
         </div>
+        <!-- ハンバーガーメニュー -->
         <input type="checkbox" class="menu-btn" id="menu-btn">
-        <label for="menu-btn" class="menu-icon"><span class="navicon"></span></label>
+        <label for="menu-btn" class="menu-icon">
+            <span class="navicon"></span>
+        </label>
             <ul class="menu">
                 <li class="top"><a href="./user_reg.php">ユーザー登録</a></li>
                 <li><a href="./user_list.php">ユーザー一覧</a></li>
@@ -33,43 +73,52 @@
 
     <!-- タイムライン -->
      <!-- ツイート入力部 -->
-     <form action="index.php" method="post" id = "tweet_area">
+     <form action="tweet_insert.php" method="post" id = "tweet_area">
         <input type="text" id = "tweet" name = "tweet" placeholder="いまどうしてる？">
         <div id = send_btn_area>
             <input type="submit" value= "送信">
         </div>
     </form>
 
-    <?php
-        if (isset($_POST['tweet'])) {
-            $tweet = $_POST['tweet'];
-            $data = $tweet . "\n";
-            file_put_contents('data/tweet.txt', $data , FILE_APPEND);
-        }
-        
-        $tweets = [];
-        // テキストデータの中身がある場合、file関数を使用して配列に格納
-        if (file_exists('data/tweet.txt')) {
-            $tweets = file('data/tweet.txt', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES); // 各行を配列に格納
-        }
-        //var_dump($tweets);
-    ?>
-
     <!-- タイムラインを表示 -->
     <div id="timeline">
-    <!-- $tweetが空でないときに実行 -->
-    <?php if (!empty($tweets)): ?>
+   <!-- $tweetsが空でないときに実行 -->
+   <?php if (!empty($tweets)): ?>
         <!-- 配列の要素を1個ずつ取り出し、要素（$tweet）に代入して処理を繰り返す -->
-        <?php foreach (array_reverse($tweets) as $tweet): // 新しい順に表示 ?>
+         <!-- array_revers関数を使用して新しい順に表示させる -->
+       <?php $ids = array_reverse($ids); ?>
+        <?php foreach (array_reverse($tweets) as $key => $tweet): ?>
             <div class="tweet-card">
+            <!-- ミートボールの表示 -->
+            <button class="meatball">
+                    <span class="meatball-ball"></span>
+                    <span class="meatball-ball"></span>
+                    <span class="meatball-ball"></span>
+            </button>
+                <!-- ミートボール押したときの表示メニュー -->
+                <div class="menu-container">
+                    <div class="submenu">
+                <?php var_dump($ids[$key]);?>
+                        <ul>
+                            <li><a href="tweet_delete.php?id=<?php echo $ids[$key] ?>">削除</a></li>
+                            <li><a href="tweet_edit.php?id=<?php echo $ids[$key] ?>">編集</a></li>
+                            <li><a href="#">未実装</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 入力したテキストと時間を表示 -->
                 <p class="tweet-content"><?php echo $tweet; ?></p>
                 <span class="tweet-time"><?php echo date('Y-m-d H:i:s'); ?></span>
+                
             </div>
         <?php endforeach; ?>
     <?php else: ?>
         <p>まだツイートがありません。</p>
     <?php endif; ?>
-</div>
+
+    </div>
+
 
 
     </main>

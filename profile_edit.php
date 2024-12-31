@@ -1,28 +1,24 @@
 <?php
 //funcs.phpに記載している共通関数を呼び出し
 require_once('funcs.php');
-//1.  DB接続します
-//データベース情報(github上には上げない)
+
+//データベース接続
+// $pdo = localdb_conn(); //ローカル環境
+// $pdo = db_conn();         //本番環境
 $db_name = '';       //データベース名(ユーザ名)
 $db_host = '';   //DBホスト
 $db_id = '';         //ユーザ名
 $db_pw = '';                      //パスワード
-
-
+  
 try {
-  //ID:'root', Password: xamppは 空白 '',SQLのポート番号の指定も必要
-  //ローカル環境で動かすときの設定
-  // $pdo = new PDO('mysql:dbname=user_db_class;
-  //                 port=3307;
-  //                 charset=utf8;
-  //                 host=localhost','root','');
-  //本番環境での設定
+  // ID:'root', Password: xamppは 空白 '',SQLのポート番号の指定も必要
   $server_info = 'mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host;
   $pdo = new PDO($server_info, $db_id, $db_pw);
-
 } catch (PDOException $e) {
   exit('DBConnectError:'.$e->getMessage());
 }
+
+
 //２．データ取得SQL作成
 $stmt = $pdo->prepare("SELECT * FROM gs_bm_table");
 $status = $stmt->execute();
