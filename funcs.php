@@ -12,10 +12,10 @@ function h($stg){
 function localdb_conn()
 {
     try {
-        $db_name = ''; //データベース名
-        $db_id   = ''; //アカウント名
-        $db_pw   = ''; //パスワード：MAMPは'root'
-        $db_host = ''; //DBホスト
+      $db_name = ''; //データベース名
+      $db_id   = ''; //アカウント名
+      $db_pw   = ''; //パスワード：MAMPは'root'
+      $db_host = ''; //DBホスト
         $pdo = new PDO('mysql:dbname=' . $db_name . ';port=3307;charset=utf8;host=' . $db_host, $db_id, $db_pw);
         return $pdo;    //$pdoを外で使うためにreturnを記載する
     } catch (PDOException $e) {

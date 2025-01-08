@@ -1,4 +1,8 @@
 <?php 
+// エラーを出力する
+ini_set('display_errors', '1');
+error_reporting(E_ALL);
+
 
 //1. POSTデータ取得
 if (empty($_POST['id']) || empty($_POST['tweet'])) {
@@ -33,7 +37,7 @@ $stmt = $pdo->prepare('UPDATE
                         SET
                             uname   = :uname,
                             tweet   = :tweet,
-                            time    = :time
+                            time    =  now()
                         WHERE
                             id      = :id;
                       ');
@@ -43,7 +47,7 @@ $stmt = $pdo->prepare('UPDATE
 $stmt->bindValue(':id', $id, PDO::PARAM_INT);
 $stmt->bindValue(':uname', "", PDO::PARAM_STR);
 $stmt->bindValue(':tweet', $tweet, PDO::PARAM_STR);
-$stmt->bindValue(':time', "", PDO::PARAM_STR);
+// $stmt->bindValue(':time', "", PDO::PARAM_STR);
 $status = $stmt->execute(); //実行
 
 //４．データ登録処理後
