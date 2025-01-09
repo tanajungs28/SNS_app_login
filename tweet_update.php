@@ -25,10 +25,8 @@ try {
   $server_info = 'mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host;
   $pdo = new PDO($server_info, $db_id, $db_pw);
 } catch (PDOException $e) {
-  echo 'Connection failed: ' . $e->getMessage();
   exit('DBConnectError:'.$e->getMessage());
 }
-
 //３．データ登録SQL作成
 
 // 1. SQL文を用意
@@ -58,7 +56,8 @@ if ($status === false) {
     exit('SQLError:' . print_r($error, true));
 } else {
     //*** function化する！*****************
-    header('Location: https://tanajun.sakura.ne.jp/SNS_app/index.php');
+    // header('Location: https://tanajun.sakura.ne.jp/SNS_app/index.php');
+    header('Location: index.php');
     exit();
 }
 

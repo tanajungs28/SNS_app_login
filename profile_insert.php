@@ -23,7 +23,6 @@ try {
   exit('DBConnectError:'.$e->getMessage());
 }
 
-
 //３．データ登録SQL作成
 
 // 1. SQL文を用意

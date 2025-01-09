@@ -1,6 +1,8 @@
 <?php
+session_start();
 //funcs.phpに記載している共通関数を呼び出し
 require_once('funcs.php');
+loginCheck();
 
 //データベース接続
 // $pdo = localdb_conn(); //ローカル環境
@@ -17,7 +19,6 @@ try {
 } catch (PDOException $e) {
   exit('DBConnectError:'.$e->getMessage());
 }
-
 
 //２．データ取得SQL作成
 $stmt = $pdo->prepare("SELECT * FROM gs_bm_table");

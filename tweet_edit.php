@@ -19,7 +19,6 @@ try {
   exit('DBConnectError:'.$e->getMessage());
 }
 
-
 //３．データ登録SQL作成
 //この時にソフトデリートの仕掛けを入れておいてもいいね（表示は消すけどデータベース上は消さないみたいな）
 $stmt = $pdo->prepare('SELECT * FROM timeline_table WHERE id = :id;');

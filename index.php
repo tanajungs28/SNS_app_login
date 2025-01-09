@@ -1,8 +1,9 @@
 <?php 
+        // 0. SESSION開始！！
+        session_start();
         //データベース接続
         require_once('funcs.php');
         // $pdo = localdb_conn(); //ローカル環境
-        // $pdo = db_conn();         //本番環境
         $db_name = '';       //データベース名(ユーザ名)
         $db_host = '';   //DBホスト
         $db_id = '';         //ユーザ名
@@ -65,7 +66,8 @@
                 <li class="top"><a href="./user_reg.php">ユーザー登録</a></li>
                 <li><a href="./user_list.php">ユーザー一覧</a></li>
                 <li><a href="./profile_edit.php">推し曲登録</a></li>
-                <li><a href="">未実装</a></li>
+                <li><a href="./login.php">ログイン</a></li>
+                <li><a href="./logout.php">ログアウト</a></li>
             </ul>
     </header>
     
@@ -90,6 +92,8 @@
         <?php foreach (array_reverse($tweets) as $key => $tweet): ?>
             <div class="tweet-card">
             <!-- ミートボールの表示 -->
+           <?php if(isset($_SESSION['kanri_flg']) && ($_SESSION['kanri_flg'] === 1)): ?>
+
             <button class="meatball">
                     <span class="meatball-ball"></span>
                     <span class="meatball-ball"></span>
@@ -106,7 +110,8 @@
                         </ul>
                     </div>
                 </div>
-
+            <?php else: ?>
+            <?php endif; ?>
                 <!-- 入力したテキストと時間を表示 -->
                 <p class="tweet-content"><?php echo $tweet; ?></p>
                 <span class="tweet-time"><?php echo date('Y-m-d H:i:s'); ?></span>

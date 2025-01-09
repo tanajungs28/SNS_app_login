@@ -5,7 +5,6 @@ $id      = $_GET['id'];
 //2. DB接続します
 require_once('funcs.php');
 // $pdo = localdb_conn(); //ローカル環境
-// $pdo = db_conn();         //本番環境
 $db_name = '';       //データベース名(ユーザ名)
 $db_host = '';   //DBホスト
 $db_id = '';         //ユーザ名
@@ -18,7 +17,6 @@ try {
 } catch (PDOException $e) {
   exit('DBConnectError:'.$e->getMessage());
 }
-
 
 //３．データ削除SQL作成
 //この時にソフトデリートの仕掛けを入れておいてもいいね（表示は消すけどデータベース上は消さないみたいな）
